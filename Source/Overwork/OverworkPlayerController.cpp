@@ -10,10 +10,29 @@
 #include "Overwork.h"
 #include "Widgets/Input/SVirtualJoystick.h"
 
+#include "CCTV_Terminal.h"
+#include "Net/UnrealNetwork.h"
+
 AOverworkPlayerController::AOverworkPlayerController()
 {
 	// set the player camera manager class
 	PlayerCameraManagerClass = AOverworkCameraManager::StaticClass();
+}
+
+void AOverworkPlayerController::ServerChangeCCTVCamera_Implementation(ACCTV_Terminal* Terminal, bool bNext)
+{
+	if (FVector::DistSquared(Terminal->GetActorLocation(), GetPawn()->GetActorLocation()) 
+		<= Terminal->GetNetCullDistanceSquared()) { 
+		// if the square of player location and Terminal location is less than CullDistance
+
+		// Calls this for every player
+		if (bNext) {
+			Terminal->NextCamera();
+		}
+		else {
+			Terminal->PreviousCamera();
+		}
+	}
 }
 
 void AOverworkPlayerController::BeginPlay()
