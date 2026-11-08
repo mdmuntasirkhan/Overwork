@@ -9,6 +9,7 @@
 class UInputMappingContext;
 class UUserWidget;
 
+class ACCTV_Terminal;
 /**
  *  Simple first person Player Controller
  *  Manages the input mapping context.
@@ -23,6 +24,9 @@ public:
 
 	/** Constructor */
 	AOverworkPlayerController();
+
+	UFUNCTION(Server, Reliable)
+	void ServerChangeCCTVCamera(ACCTV_Terminal* Terminal, bool bNext);
 
 protected:
 
