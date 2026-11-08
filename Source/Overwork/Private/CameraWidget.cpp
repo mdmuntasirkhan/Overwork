@@ -35,10 +35,14 @@ void UCameraWidget::InitializeCameraWidget(ACCTV_Terminal* terminal)
 	Next->OnClicked.AddUniqueDynamic(this, &UCameraWidget::NextClick);
 	Previous->OnClicked.AddUniqueDynamic(this, &UCameraWidget::PreviousClick);
 
+	// For some reason Unreal is not regonize the default click method (Up and Down) in multiplayer
+	// (Works perfectlly on single player mode)
+	// So I switch it to MouseDown
 	Next->SetClickMethod(EButtonClickMethod::MouseDown);
 	Previous->SetClickMethod(EButtonClickMethod::MouseDown);
 }
 
+// set the material used on CameralFeedImage to a dynamicMaterial and change it accordingly
 void UCameraWidget::SetFeedMaterial(UTextureRenderTarget2D* image)
 {
 	if (IsValid(CameraFeedImage) && IsValid(image)) {
