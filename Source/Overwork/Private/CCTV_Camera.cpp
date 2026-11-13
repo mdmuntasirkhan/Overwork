@@ -14,8 +14,14 @@ ACCTV_Camera::ACCTV_Camera()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Scene"));
+	RootComponent = SceneRoot;
+
+	Pivot = CreateDefaultSubobject<USceneComponent>(TEXT("Pivot"));
+	Pivot->SetupAttachment(SceneRoot);
+
 	CameraMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CameraMesh"));
-	RootComponent = CameraMesh;
+	CameraMesh->SetupAttachment(Pivot);
 
 	CameraCaptureComponent = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("CaptureComponent2D"));
 	CameraCaptureComponent->SetupAttachment(CameraMesh);
