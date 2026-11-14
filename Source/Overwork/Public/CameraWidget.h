@@ -32,7 +32,7 @@ private:
     TObjectPtr<ACCTV_Terminal> CameraTerminal;
 
 protected:
-    UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
     TObjectPtr<UImage> CameraFeedImage;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
