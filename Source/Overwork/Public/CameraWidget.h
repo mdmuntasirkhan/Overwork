@@ -50,4 +50,7 @@ public:
 
     UFUNCTION()
     void SetFeedMaterial(UTextureRenderTarget2D* cameraImage);
+
+    UFUNCTION(BlueprintPure)
+    ACCTV_Terminal* GetTerminal() const;
 };

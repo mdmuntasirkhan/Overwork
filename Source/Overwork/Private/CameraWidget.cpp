@@ -53,3 +53,10 @@ void UCameraWidget::SetFeedMaterial(UTextureRenderTarget2D* image)
 		FeedMaterial->SetTextureParameterValue("CameraTexture", image);
 	}
 }
+
+ACCTV_Terminal* UCameraWidget::GetTerminal() const
+{
+	return CameraTerminal.Get();
+}
+
+

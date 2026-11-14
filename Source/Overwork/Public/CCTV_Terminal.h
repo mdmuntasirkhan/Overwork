@@ -64,4 +64,7 @@ private:
 
 	UFUNCTION()
 	void UpdateCameraWidget();
+
+	UFUNCTION(BlueprintPure)
+	int32 GetCurrentCamera() const { return CurrentCameraIndex; }
 };
