@@ -14,6 +14,7 @@ class UTextureRenderTarget2D;
 class UImage;
 class UMaterialInstanceDynamic;
 class UCameraWidget;
+class ACCTV_Camera;
 
 UCLASS()
 class OVERWORK_API ACCTV_Terminal : public AActor
@@ -46,6 +47,9 @@ protected:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, ReplicatedUsing = OnRep_UpdateCurrentCameraIndex)
 	int32 CurrentCameraIndex = 0;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Replicated)
+	int32 PreviousCameraIndex = 0;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -58,6 +62,9 @@ public:
 
 	// Function for calling all the Replacted variables / functions when there is a change
 	virtual void GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void CameraSwitched();
 private:
 	UFUNCTION()
 	void OnRep_UpdateCurrentCameraIndex();
@@ -67,4 +74,7 @@ private:
 
 	UFUNCTION(BlueprintPure)
 	int32 GetCurrentCamera() const { return CurrentCameraIndex; }
+
+	UFUNCTION(BlueprintPure)
+	int32 GetPreviousCamera() const { return PreviousCameraIndex; }
 };

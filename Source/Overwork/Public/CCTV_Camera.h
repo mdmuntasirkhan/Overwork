@@ -32,11 +32,19 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<USceneComponent> Pivot;
 
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<USceneCaptureComponent2D> CameraCaptureComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsActive;
+
+	FTimerHandle CaptureTimer;
+	
+	void CaptureFrame();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
+	void setIsActive(bool state);
 };

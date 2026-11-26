@@ -7,6 +7,7 @@
 #include "Net/UnrealNetwork.h"
 
 #include "Engine/Engine.h"
+#include "TimerManager.h"
 
 // Sets default values
 ACCTV_Camera::ACCTV_Camera()
@@ -24,7 +25,7 @@ ACCTV_Camera::ACCTV_Camera()
 	CameraMesh->SetupAttachment(Pivot);
 
 	CameraCaptureComponent = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("CaptureComponent2D"));
-	CameraCaptureComponent->SetupAttachment(CameraMesh);
+	CameraCaptureComponent->SetupAttachment(Pivot);
 
 	// set capturing every frame
 	CameraCaptureComponent->bCaptureEveryFrame = true;
@@ -36,6 +37,7 @@ ACCTV_Camera::ACCTV_Camera()
 	CameraCaptureComponent->FOVAngle = 90.0f;
 	
 	bReplicates = true;
+	bIsActive = false;
 	SetReplicateMovement(true);
 }
 
@@ -50,9 +52,23 @@ void ACCTV_Camera::BeginPlay()
 void ACCTV_Camera::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	// capture scene every frame
-	CameraCaptureComponent->CaptureScene();
 	
+}
+
+void ACCTV_Camera::setIsActive(bool state)
+{
+	bIsActive = state;
+
+	if (bIsActive) {
+		CaptureFrame();
+		GetWorldTimerManager().SetTimer(CaptureTimer, this, &ACCTV_Camera::CaptureFrame, 0.07f, true);
+	}
+	else {
+		GetWorldTimerManager().ClearTimer(CaptureTimer);
+	}
+}
+
+void ACCTV_Camera::CaptureFrame() {
+	CameraCaptureComponent->CaptureScene();
 }
 

@@ -13,6 +13,7 @@
 #include "Engine/Engine.h"
 
 #include "CameraWidget.h"
+#include "CCTV_Camera.h"
 
 // Sets default values
 ACCTV_Terminal::ACCTV_Terminal()
@@ -57,6 +58,7 @@ void ACCTV_Terminal::BeginPlay()
 	}
 
 	CurrentCameraIndex = 0;
+	PreviousCameraIndex = 0;
 
 	// Calls the update CameraWidget and set the first Render target to current scene
 	UpdateCameraWidget();
@@ -74,7 +76,9 @@ void ACCTV_Terminal::NextCamera()
 	if (CameraFeeds.IsEmpty()) // Feeds should not be empty
 		return;
 
+	PreviousCameraIndex = CurrentCameraIndex;
 	CurrentCameraIndex = (CurrentCameraIndex + 1) % CameraFeeds.Num();
+	CameraSwitched();
 	UpdateCameraWidget();
 }
 
@@ -83,7 +87,9 @@ void ACCTV_Terminal::PreviousCamera()
 	if (CameraFeeds.IsEmpty())
 		return;
 
+	PreviousCameraIndex = CurrentCameraIndex;
 	CurrentCameraIndex = (CurrentCameraIndex + CameraFeeds.Num() - 1) % CameraFeeds.Num();
+	CameraSwitched();
 	UpdateCameraWidget();
 }
 
